@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 import Button from "./components/Button";
 import Navbar from "./components/Navbar";
@@ -6,7 +7,11 @@ import Navbar from "./components/Navbar";
 import HeroDesktop from "./assets/image-hero-desktop.png";
 import HeroMobile from "./assets/image-hero-mobile.png";
 
-import { clients } from "./config/utils";
+import {
+  clients,
+  fadeInLeftVariants,
+  fadeInRightVariants,
+} from "./config/utils";
 
 const App = () => {
   const [HeroImg, setHeroImg] = useState("");
@@ -53,9 +58,15 @@ const App = () => {
       >
         <Navbar />
       </header>
-      <main className="mb-36 md:px-12">
+      <main className="mb-36 md:px-12 overflow-hidden">
         <section className="grid grid-cols-1 md:grid-cols-2 gap-4 place-content-center">
-          <div className="md:mt-10 mt-8 order-2 md:order-1 w-full px-4 flex flex-col items-center md:items-start">
+          <motion.div
+            variants={fadeInRightVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="md:mt-10 mt-8 order-2 md:order-1 w-full px-4 flex flex-col items-center md:items-start"
+          >
             <h1 className="text-near-black text-center md:text-left mb-4 md:mb-10 text-4xl sm:text-5xl md:text-[80px] leading-[1] font-bold">
               {isMobile ? (
                 <>Make remote work</>
@@ -65,7 +76,7 @@ const App = () => {
                 </>
               )}
             </h1>
-            <p className="font-medium text-medium-gray text-lg mb-10 w-full md:w-[80%] text-center md:text-left">
+            <p className="font-medium text-medium-gray text-base lg:text-lg mb-10 w-full md:w-[80%] text-center md:text-left">
               Get your team in sync, no matter the location. Streamline
               processes, create team rituals, and watch productivity soar.
             </p>
@@ -79,15 +90,21 @@ const App = () => {
                 <img key={client.id} src={client.src} alt={client.name} />
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="order-1 md:order-2">
+          <motion.div
+            variants={fadeInLeftVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="order-1 md:order-2"
+          >
             <img
               src={HeroImg}
               className="w-full md:w-[90%] block"
               alt="hero-image"
             />
-          </div>
+          </motion.div>
         </section>
       </main>
     </div>

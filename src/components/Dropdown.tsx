@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { twMerge } from "tailwind-merge";
+import { motion } from "framer-motion";
+
 import CaretDown from "../assets/icon-arrow-down.svg";
 import CaretUp from "../assets/icon-arrow-up.svg";
-import { twMerge } from "tailwind-merge";
+
+import { heightVariants } from "../config/utils";
 
 interface DropdownProps {
   title: string;
@@ -22,10 +26,10 @@ const Dropdown: React.FC<DropdownProps> = ({ title, children, className }) => {
         className="flex items-center gap-x-2 cursor-pointer"
         onClick={handleClick}
       >
-        <span className="text-lg font-medium text-medium-gray hover:text-near-black transition">
+        <span className="text-base lg:text-lg font-medium text-medium-gray hover:text-near-black transition">
           {title}
         </span>
-        <span className="mt-1">
+        <span>
           <img
             src={isOpen ? CaretUp : CaretDown}
             alt={!isOpen ? "open dropdown" : "close dropdown"}
@@ -34,14 +38,18 @@ const Dropdown: React.FC<DropdownProps> = ({ title, children, className }) => {
       </div>
 
       {isOpen && (
-        <div
+        <motion.div
+          variants={heightVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
           className={twMerge(
             `md:bg-white md:absolute top-10 rounded-lg w-40 px-7 py-4 md:drop-shadow-lg`,
             className
           )}
         >
           {children}
-        </div>
+        </motion.div>
       )}
     </div>
   );
